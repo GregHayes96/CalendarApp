@@ -1,9 +1,15 @@
-﻿// Calendar.cpp : Defines the entry point for the application.
+﻿#include "Calendar.h"
 
+//Date copy constructor
+Date::Date(const Date& source) 
+    :Date{ source.day , source.mon , source.year }
+{
 
-#include "Calendar.h"
+}
 
+//-------------------------------------------------------------------------------------
 //Date member functions
+
 void Date::add_days(int n) {
 
     //issue
@@ -69,6 +75,22 @@ void Date::add_years(int n){
     }
     year += n;
 }
+
+//-------------------------------------------------------------------------------------
+//Member function to find and set which day of the week it is
+
+Days Date::get_NoD() {
+
+    return NoD;
+}
+
+Days Date::calculate_NoD() {
+
+    return NoD;
+}
+
+//-------------------------------------------------------------------------------------
+//helper functions
 
 bool leap_year(int y)
 {

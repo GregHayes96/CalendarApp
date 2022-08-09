@@ -1,5 +1,13 @@
 #Calendar project
 
+#version 2
+Added Functions:
+
+*enum class which has names for days of the week
+*copy constructor overload function
+
+
+
 This is going to be a project which has a fully functioning calendar, with the ability to:
 Add dates
 Schedule items against the current date

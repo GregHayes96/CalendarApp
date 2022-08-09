@@ -9,17 +9,23 @@ enum Months {
 
 //-----------------------------------------------------------------------------
 
-//will contain a date consiting of a day, month, year
-//have member function to change date, add on days, 
+enum class Days
+{
+	NIL = 0, mon, tue, wed, thu, fri, sat, sun
+};
+
+//-----------------------------------------------------------------------------
+
 class Date {
 	//format: DD/MM/YYYY
 private:
 	int day;
 	Months mon;
 	int year;
+	Days NoD;	//NoD - Name of Day , i.e. mon, tue etc.
 
 	//this will track the amount of user defined dates in the diary, to compare the calendar with the amount of upcoming events.
-	//intention is to remove one when the current date passes the event date.
+	//intention is to remove one when the current date passes the event date - implementation to come
 	static int dateInDiary;
 public:
 	//getters
@@ -30,16 +36,22 @@ public:
 	//setters
 
 	//constructor
-	Date(int day = 01, Months mon = jan, int year = 2000) : day(day), mon(mon), year(year) { ++dateInDiary; };
+	Date(int day = 01, Months mon = jan, int year = 2000, Days NoD = Days::sat) : day(day), mon(mon), year(year), NoD(NoD) { };
+		
+	//7++dateInDiary	-	potential implementation of the calendar objects
 
 	//copy constructor
-
-	//destructor
+	Date(const Date& source);
+	
 
 	//member functions
 	void add_days(int n);
 	void add_months(int n);
 	void add_years(int n);
+
+	//
+	Days get_NoD();
+	Days calculate_NoD();
 
 };
 
