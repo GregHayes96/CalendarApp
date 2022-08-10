@@ -33,7 +33,7 @@ public:
 	Months get_month() const { return mon; }
 	int get_year() const { return year; }
 
-	//setters
+	void print_date();
 
 	//constructor
 	Date(int day = 01, Months mon = jan, int year = 2000, Days NoD = Days::sat) : day(day), mon(mon), year(year), NoD(NoD) { };
@@ -43,15 +43,14 @@ public:
 	//copy constructor
 	Date(const Date& source);
 	
-
 	//member functions
 	void add_days(int n);
 	void add_months(int n);
 	void add_years(int n);
 
-	//
+	//Additonal functions for the name of the week day
 	Days get_NoD();
-	Days calculate_NoD();
+	Days calculate_NoD(int n);
 
 };
 
