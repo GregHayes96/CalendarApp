@@ -64,13 +64,24 @@ void Date::add_months(int n){
 }
 
 void Date::add_years(int n){
-    if (n < 0) throw "Can only add a positive amount of months";
+    if (n < 0) throw "Can only add a positive amount of years";
 
     if (mon == feb && day == 29 && leap_year(year + n) == false) {
         mon = mar;       
         day = 1;
     }
     year += n;
+}
+
+void Date::Add_note() {
+    std::string confirm = "n";
+    while (confirm == "n" || confirm == "no" || confirm == "No" || confirm == "N"){
+        std::cout << "Please enter event (one word)" << std::endl;
+        std::cin >> note;
+        std::cout << std::endl;
+        std::cout << "Event details: " << note << std::endl << "Confirm? (Y/N)" << std::endl;
+        std::cin >> confirm;
+    }
 }
 
 //-------------------------------------------------------------------------------------
@@ -82,24 +93,16 @@ void Date::print_date() {
               << get_year() << std::endl;
 }
 
-
-
-
 //-------------------------------------------------------------------------------------
-//function to find and set which day of the week it is
-
-Days Date::get_NoD() {
-
-    return NoD;
-}
-
 //calculates how many days have been added, in reference to the starting date. 
+
+//this function works, but if someone enters a date with the constructor it gets thrown off.
+//Need to find a way of offsetting this date to the date entered in the constructor
 Days Date::calculate_NoD(int n) {
 
     while (n >= 7) {
         n -= 7;
     }
-
     int temp = static_cast<int>(NoD);
     temp += n;
     if (temp > 7) { temp -= 7; }
@@ -107,6 +110,29 @@ Days Date::calculate_NoD(int n) {
     NoD = static_cast<Days>(temp);
 
     return NoD;
+}
+
+//checks if the date entered by someone is an actual day on the calendar
+bool Date::valid_day() {
+    if (day > 31 || day < 1) throw "day entered not in range";
+    if (year < 1900) throw "Year out of calendar range";
+
+    switch (mon) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            if (day > 31) throw "Too many days";
+            break;
+        case 2:
+            if (day > 28 && leap_year(get_year()) == false) throw "Too many days";
+            else if (day > 29 && leap_year(get_year()) == true) throw "Too many days";
+            break;
+        case 4: case 6: case 9: case 11:
+            if (day > 30) throw "Too many days";
+            break;
+        default:
+            throw "Error in calculating days";
+    }
+
+    return true;
 }
 
 //-------------------------------------------------------------------------------------
@@ -123,4 +149,13 @@ bool leap_year(int y)
     else
         return false;
 }
+
+
+//-----------------------------------------------------------------------------
+//global variables
+
+//important global variable for date, this is used as a baseline for a valid date
+Date Baseline;
+
+
 
