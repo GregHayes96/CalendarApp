@@ -1,16 +1,15 @@
 #Calendar project
 
-#version 4
+#version 5
 Calendar project which can be used to enter important dates to the user, change the date, compare the dates with upcoming events to check the upcomign schedule. 
 
 Added Functions:
 
-*valid date check, this is a form of error handling which is called upon creation of a user defined object. Makes sure it is not breaking calendar rules, I.E, 29 of feb on none leap year
-*Add note feature, now when a date is added, you can given a note to give details on the calendar event
-*Introduction of a global variable for Date to baseline all dates off. To be used as a reference
-
+*added an overload operator to compare two dates. Compares two Date user objects and returns the closer of the two dates.
+*Calendar class now can search its stored events and return the next up coming event. can also print all the events in the calendar
 
 Upcoming work:
+*Changes to the print calednar function, would like it to print in order of the events about to happen and not the order they have been stored in the vector
 *implementation of the naming of the day of the week - feature mightbe removed and added later on when overall structure works better
 
 

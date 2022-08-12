@@ -3,8 +3,18 @@
 int main() {
 
 	try {
-		
+		Calendar Plans;
 		Date Today(28,feb,2001);
+		Date Future1(29, feb, 2004);
+		Date Future2(12, dec, 2002);
+		Date Future3(15, jan, 2005);
+
+		Plans.add_event(Today);
+		Plans.add_event(Future1);
+		Plans.add_event(Future2);
+		Plans.add_event(Future3);
+
+		Plans.next_event();
 
 		//testing of the adding functions of date class
 		Today.add_days(56);

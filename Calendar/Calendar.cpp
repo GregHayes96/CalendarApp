@@ -136,6 +136,80 @@ bool Date::valid_day() {
 }
 
 //-------------------------------------------------------------------------------------
+//Calendar Member functions
+
+void Calendar::add_event(Date& obj) {
+    Date* event;
+    event = &obj;
+    events.push_back(event);
+
+}
+
+void Calendar::print_events() {
+
+    for (int i = 0; i < events.size(); ++i) {
+        std::cout << "Events in diary: " << std::endl;
+        std::cout << i + 1 << ". " << events[i]->get_note() << "  -  ";
+        events[i]->print_date();
+        std::cout << std::endl;
+
+    }
+}
+
+Date Calendar::next_event() {
+
+    int next_event = 0;
+    for (int i = 0; i < events.size(); ++i) {
+
+        if (events[next_event] < events[i] == true) {
+            
+
+        }
+        else {
+            next_event = i;
+        }
+    }
+
+    events[next_event]->print_date();
+
+    return *events[next_event];
+}
+
+//------------------------------------------------------------------------------------
+//overload operators
+
+//compares dates to see if th RHS is a larger date i.e 22/03/2004 > 21/02/2001
+bool Date::operator<(const Date& rhs) const {
+    //compare year
+    if (this->year < rhs.year) {
+        return true;
+    }
+    else if (this->year > rhs.year) {
+        return false;
+    }
+    //compare month
+    else if(this->year == rhs.year && this->mon < rhs.mon){
+        return true;
+    }
+    else if (this->year == rhs.year && this->mon > rhs.mon) {
+        return false;
+    }
+    //compare day
+    else if (this->mon == rhs.mon && this->day < rhs.day) {
+        return true;
+    }
+    else if (this->mon == rhs.mon && this->day > rhs.day) {
+        return false;
+    }
+    //dates match
+    else {
+        std::cout << "Equal Dates";
+        return true;
+    }
+
+}
+
+//-------------------------------------------------------------------------------------
 //helper functions
 
 bool leap_year(int y)
@@ -149,13 +223,3 @@ bool leap_year(int y)
     else
         return false;
 }
-
-
-//-----------------------------------------------------------------------------
-//global variables
-
-//important global variable for date, this is used as a baseline for a valid date
-Date Baseline;
-
-
-

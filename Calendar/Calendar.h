@@ -31,6 +31,7 @@ public:
 	Months get_month() const { return mon; }
 	int get_year() const { return year; }
 	Days get_NoD() const { return NoD; }
+	std::string get_note() const { return note; }
 
 	void print_date();
 
@@ -51,16 +52,21 @@ public:
 	//Additonal functions for the name of the week day
 	Days calculate_NoD(int n);
 
+	//overload operators
+	bool operator<(const Date& rhs) const;
+
 };
 
 //-----------------------------------------------------------------------------
 
 //will contain information about the yearly plan, contain important dates, compare them to the current date
-class calendar {
+class Calendar {
 private:
-	std::vector<Date> events;
+	std::vector<Date*> events;
 public:
-
+	void add_event(Date& obj);
+	void print_events();
+	Date next_event();
 
 };
 
