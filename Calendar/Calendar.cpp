@@ -43,6 +43,7 @@ void Date::add_days(int n) {
     else if (n < 0) { //add days on to current month
         day += n;
     }
+    sort_days();
 }
 
 void Date::add_months(int n){
@@ -61,6 +62,7 @@ void Date::add_months(int n){
     else if (temp <= 12) {
         mon = (Months)temp;
     }
+    sort_days();
 }
 
 void Date::add_years(int n){
@@ -71,6 +73,7 @@ void Date::add_years(int n){
         day = 1;
     }
     year += n;
+    sort_days();
 }
 
 void Date::Add_note() {
@@ -146,9 +149,11 @@ void Calendar::add_event(Date& obj) {
 }
 
 void Calendar::print_events() {
+  
+    std::sort(events.begin(), events.end());
 
+    std::cout << "Events in diary: " << std::endl;
     for (int i = 0; i < events.size(); ++i) {
-        std::cout << "Events in diary: " << std::endl;
         std::cout << i + 1 << ". " << events[i]->get_note() << "  -  ";
         events[i]->print_date();
         std::cout << std::endl;
@@ -163,7 +168,6 @@ Date Calendar::next_event() {
 
         if (events[next_event] < events[i] == true) {
             
-
         }
         else {
             next_event = i;
@@ -180,33 +184,20 @@ Date Calendar::next_event() {
 
 //compares dates to see if th RHS is a larger date i.e 22/03/2004 > 21/02/2001
 bool Date::operator<(const Date& rhs) const {
-    //compare year
-    if (this->year < rhs.year) {
-        return true;
-    }
-    else if (this->year > rhs.year) {
-        return false;
-    }
-    //compare month
-    else if(this->year == rhs.year && this->mon < rhs.mon){
-        return true;
-    }
-    else if (this->year == rhs.year && this->mon > rhs.mon) {
-        return false;
-    }
-    //compare day
-    else if (this->mon == rhs.mon && this->day < rhs.day) {
-        return true;
-    }
-    else if (this->mon == rhs.mon && this->day > rhs.day) {
-        return false;
-    }
-    //dates match
-    else {
-        std::cout << "Equal Dates";
-        return true;
-    }
+    //compare the year which is in reverse format - yyyymmdd - the smaller the number the closer the date
+    return  (this->sort_code <= rhs.sort_code);
 
+}
+
+//this will create a fresh date code for comparison every time it is called. is called in every instance of a day/month/year addition
+int Date::sort_days() {
+
+    sort_code = 0;
+    sort_code += (get_year() * 10000);
+    sort_code += (get_month() * 100);
+    sort_code += get_day();
+
+    return sort_code;
 }
 
 //-------------------------------------------------------------------------------------
@@ -223,3 +214,12 @@ bool leap_year(int y)
     else
         return false;
 }
+
+//-----------------------------------------------------------------------------------
+//lambda
+
+//auto sortrulelambda = [](date const& d1, date const& d2) -> bool
+//{
+//    return (d1.get_sortcode() < d2.get_sortcode());
+//
+//};

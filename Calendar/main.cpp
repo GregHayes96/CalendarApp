@@ -9,6 +9,11 @@ int main() {
 		Date Future2(12, dec, 2002);
 		Date Future3(15, jan, 2005);
 
+		//outputs true, testing of operator overload for both scenarios
+		if (Today < Future1 == true) std::cout << "True!" << std::endl;
+		//will output nothing - overload operator works!
+		if (Future1 < Today == true) std::cout << "True!" << std::endl;
+
 		Plans.add_event(Today);
 		Plans.add_event(Future1);
 		Plans.add_event(Future2);
@@ -27,6 +32,8 @@ int main() {
 		Today.print_date();
 
 		Today.Add_note();
+
+		Plans.print_events();
 
 	}
 
