@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 //enum of months to stop the entry of the wrong date
 enum Months {
@@ -12,7 +13,7 @@ enum Months {
 
 enum Days
 {
-	NIL = 0, mon, tue, wed, thu, fri, sat, sun
+	sun = 0, mon, tue, wed, thu, fri, sat
 };
 
 //-----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ public:
 	int get_sortcode() const { return sort_code; }
 
 	void print_date();
+	void print_NoD();
 
 	//constructor
 	Date(int day = 01, Months mon = jan, int year = 2000, Days NoD = sat) : day(day), mon(mon), year(year), NoD(NoD), sort_code(0) {
@@ -54,12 +56,14 @@ public:
 	bool valid_day();
 
 	//Additonal functions for the name of the week day
-	Days calculate_NoD(int n);
+	Days calculate_NoD();
 
 	int sort_days();
 
 	//overload operators
 	bool operator<(const Date& rhs) const;
+	bool operator==(const Date& rhs) const;
+	bool operator>(const Date& rhs) const;
 
 };
 
@@ -79,6 +83,12 @@ public:
 //Date class helper functions
 //-----------------------------------------------------------------------------
 bool leap_year(int y);
+
+int month_code(Months m);
+
+int century_code(int year);
+
+int year_code(int year);
 
 //auto sortRuleLambda = [](Date const& d1, Date const& d2)->bool {};
 

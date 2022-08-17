@@ -3,11 +3,36 @@
 int main() {
 
 	try {
+		
 		Calendar Plans;
-		Date Today(28,feb,2001);
-		Date Future1(29, feb, 2004);
-		Date Future2(12, dec, 2002);
-		Date Future3(15, jan, 2005);
+		Date Today(28,feb,2001);		//wednesday
+		Date Future1(29, feb, 2004);	//sunday
+		Date Future2(12, dec, 2002);	//thursday
+		Date Future3(15, jan, 2005);	//saturday
+		Date Future4(31, oct, 2019);	//thursday
+		Date Future5(1, nov, 2019);		//friday
+		Date Future6(23, jun, 2023);	//friday
+
+		Today.calculate_NoD();;
+		Today.print_NoD();		
+
+		Future1.calculate_NoD();
+		Future1.print_NoD();	
+	
+		Future2.calculate_NoD();
+		Future2.print_NoD();	
+	;
+		Future3.calculate_NoD();
+		Future3.print_NoD();	
+		
+		Future4.calculate_NoD();
+		Future4.print_NoD();	
+		
+		Future5.calculate_NoD();
+		Future5.print_NoD();	
+
+		Future6.calculate_NoD();
+		Future6.print_NoD();
 
 		//outputs true, testing of operator overload for both scenarios
 		if (Today < Future1 == true) std::cout << "True!" << std::endl;

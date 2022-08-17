@@ -96,24 +96,69 @@ void Date::print_date() {
               << get_year() << std::endl;
 }
 
+void Date::print_NoD() {
+    std::vector<std::string> days{ "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday" };
+    int temp = NoD;
+    std::cout << days[temp] << std::endl;
+}
+
 //-------------------------------------------------------------------------------------
-//calculates how many days have been added, in reference to the starting date. 
+//calculates the day of the week, mon, tue etc. uses all the function below to calculate 
 
-//this function works, but if someone enters a date with the constructor it gets thrown off.
-//Need to find a way of offsetting this date to the date entered in the constructor
-Days Date::calculate_NoD(int n) {
+Days Date::calculate_NoD() {
 
-    while (n >= 7) {
-        n -= 7;
+    int name = century_code(get_year()) + year_code(get_year()) + month_code(get_month()) + get_day();
+    if (leap_year(get_year()) == true && get_month() == feb || get_month() == jan) name -= 1;
+
+    while (name >= 7) {
+        name -= 7;
     }
-    int temp = static_cast<int>(NoD);
-    temp += n;
-    if (temp > 7) { temp -= 7; }
 
-    NoD = static_cast<Days>(temp);
+    NoD = Days(name);
 
     return NoD;
 }
+
+int year_code(int year) {
+    //(YY + (YY / 4)) mod 7
+    std::string last_two = std::to_string(year);
+
+    int digit = std::stoi(last_two);
+    int sec_dig = digit / 10 % 10;
+    digit = digit % 10;
+    digit += sec_dig;
+   
+    digit = digit + (digit / 4);
+    while (digit >= 7) {
+        digit -= 7;
+    }
+    return digit;
+}
+
+int century_code(int year){
+    std::vector<int> century_c{ 4,2,0,6,4,2,0 };
+    int temp = 0;
+
+    if (year >= 1700 && year < 1800) { temp = 0; }
+    else if(year >= 1800 && year < 1900) { temp = 1; }
+    else if (year >= 1900 && year < 2000) { temp = 2; }
+    else if (year >= 2000 && year < 2100) { temp = 3; }
+    else if (year >= 2100 && year < 2200) { temp = 4; }
+    else if (year >= 2200 && year < 2300) { temp = 5; }
+    else { throw "Year not in range"; }
+
+    temp = century_c[temp];
+    return temp;
+}
+
+int month_code(Months m) {
+    std::vector<int> month_c{ 0,3,3,6,1,4,6,2,5,0,3,5 };
+    int temp = static_cast<int>(m);
+    temp = month_c[temp-1];
+    return temp;
+}
+
+//--------------------------------------------------------------------------------
 
 //checks if the date entered by someone is an actual day on the calendar
 bool Date::valid_day() {
@@ -149,7 +194,7 @@ void Calendar::add_event(Date& obj) {
 }
 
 void Calendar::print_events() {
-  
+    
     std::sort(events.begin(), events.end());
 
     std::cout << "Events in diary: " << std::endl;
@@ -185,8 +230,18 @@ Date Calendar::next_event() {
 //compares dates to see if th RHS is a larger date i.e 22/03/2004 > 21/02/2001
 bool Date::operator<(const Date& rhs) const {
     //compare the year which is in reverse format - yyyymmdd - the smaller the number the closer the date
-    return  (this->sort_code <= rhs.sort_code);
+    return  (this->sort_code < rhs.sort_code);
 
+}
+
+bool Date::operator==(const Date& rhs) const {
+
+    return (this->sort_code == rhs.sort_code);
+}
+
+bool Date::operator>(const Date& rhs) const {
+
+    return (this->sort_code > rhs.sort_code);
 }
 
 //this will create a fresh date code for comparison every time it is called. is called in every instance of a day/month/year addition
