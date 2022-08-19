@@ -25,7 +25,7 @@ private:
 	Months mon;
 	int year;
 	Days NoD;	//NoD - Name of Day , i.e. mon, tue etc.
-	std::string note;
+	std::vector<std::string> note;
 	static int dateInDiary;
 	int sort_code;
 public:
@@ -34,11 +34,11 @@ public:
 	Months get_month() const { return mon; }
 	int get_year() const { return year; }
 	Days get_NoD() const { return NoD; }
-	std::string get_note() const { return note; }
 	int get_sortcode() const { return sort_code; }
 
 	void print_date();
 	void print_NoD();
+	void print_note();
 
 	//constructor
 	Date(int day = 01, Months mon = jan, int year = 2000, Days NoD = sat) : day(day), mon(mon), year(year), NoD(NoD), sort_code(0) {
@@ -73,10 +73,13 @@ public:
 class Calendar {
 private:
 	std::vector<Date*> events;
+	Date *Baseline;
 public:
 	void add_event(Date& obj);
+	void add_baseline(Date& obj);
 	void print_events();
 	Date next_event();
+	void update();
 
 };
 

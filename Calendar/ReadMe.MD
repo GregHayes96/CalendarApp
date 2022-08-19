@@ -1,12 +1,13 @@
 #Calendar project
 
-#version 7
+#version 8
 Calendar project which can be used to enter important dates to the user, change the date, compare the dates with upcoming events to check the upcomign schedule. 
 
 Added Functions:
 
-*added the function to calculate the day of the week using a formula. Function is called which will calculate the day from the object values
-*more operators have been overloaded, now contains the > and == operators.
+*Solved some issues giving errors for name of the week function. out by range error and a small math error.
+*Changed the Sort method to a bubble sort, wanted to try some DSA mehthods
+*Changed the note to now take as many characters as you would like instead of one word with an exit character of '|'
 
 Upcoming work:
 *Inherited classes which are different calendars - large task to develop so will be done in stages after some more planning

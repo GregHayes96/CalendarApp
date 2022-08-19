@@ -10,6 +10,13 @@ Date::Date(const Date& source)
 //-------------------------------------------------------------------------------------
 //Date member functions
 
+void Date::print_note(){
+    for (int i = 0; i < note.size(); ++i) {
+        std::cout << note[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
 void Date::add_days(int n) {
     if (n < 0) throw "Can only add a positive amount of days";
 
@@ -78,12 +85,14 @@ void Date::add_years(int n){
 
 void Date::Add_note() {
     std::string confirm = "n";
-    while (confirm == "n" || confirm == "no" || confirm == "No" || confirm == "N"){
-        std::cout << "Please enter event (one word)" << std::endl;
-        std::cin >> note;
-        std::cout << std::endl;
-        std::cout << "Event details: " << note << std::endl << "Confirm? (Y/N)" << std::endl;
+    std::cout << "Please enter event details with '|' to finsih" << std::endl;
+    bool exit = false;
+    while (exit == false) {
         std::cin >> confirm;
+        if (confirm == "|") exit = true;
+        else {
+            note.push_back(confirm);
+        }
     }
 }
 
@@ -108,7 +117,7 @@ void Date::print_NoD() {
 Days Date::calculate_NoD() {
 
     int name = century_code(get_year()) + year_code(get_year()) + month_code(get_month()) + get_day();
-    if (leap_year(get_year()) == true && get_month() == feb || get_month() == jan) name -= 1;
+    if (leap_year(get_year()) == true && (get_month() == feb || get_month() == jan)) name -= 1;
 
     while (name >= 7) {
         name -= 7;
@@ -126,7 +135,7 @@ int year_code(int year) {
     int digit = std::stoi(last_two);
     int sec_dig = digit / 10 % 10;
     digit = digit % 10;
-    digit += sec_dig;
+    digit += sec_dig * 10;
    
     digit = digit + (digit / 4);
     while (digit >= 7) {
@@ -193,14 +202,36 @@ void Calendar::add_event(Date& obj) {
 
 }
 
+//this is the time which is today, this will keep track of upcoming events against the date today.
+void Calendar::add_baseline(Date& obj) {
+    Date* event;
+    event = &obj;
+    Baseline = event;
+}
+
 void Calendar::print_events() {
     
-    std::sort(events.begin(), events.end());
+    //bubble sort method    -   changed algorithm to trial so DSA methods
+    for (int step = 1; step < events.size(); step++) {
 
+        for (int i = 0; i < events.size() - step; ++i) {
+
+            if (events[i]->get_sortcode() > events[i + 1]->get_sortcode()) {
+
+                Date* temp = events[i];
+                events[i] = events[i + 1];
+                events[i + 1] = temp;
+            }
+        }
+    }
     std::cout << "Events in diary: " << std::endl;
     for (int i = 0; i < events.size(); ++i) {
-        std::cout << i + 1 << ". " << events[i]->get_note() << "  -  ";
+        std::cout << i + 1 << ". ";
         events[i]->print_date();
+        std::cout << "  : ";
+        events[i]->print_NoD();
+        std::cout << "  -  ";
+        events[i]->print_note();
         std::cout << std::endl;
 
     }
@@ -222,6 +253,18 @@ Date Calendar::next_event() {
     events[next_event]->print_date();
 
     return *events[next_event];
+}
+
+void Calendar::update() {
+    int count = 0;
+    for (int i = 0; i < events.size(); ++i) {
+        if (events[i]->get_sortcode() < Baseline->get_sortcode()) {
+            events.erase(events.begin() + i);
+            count++;
+        }
+    }
+   
+    if (count > 0) std::cout << "Past dates in calendar. Total events removed: " << count << std::endl;
 }
 
 //------------------------------------------------------------------------------------
@@ -271,10 +314,3 @@ bool leap_year(int y)
 }
 
 //-----------------------------------------------------------------------------------
-//lambda
-
-//auto sortrulelambda = [](date const& d1, date const& d2) -> bool
-//{
-//    return (d1.get_sortcode() < d2.get_sortcode());
-//
-//};
