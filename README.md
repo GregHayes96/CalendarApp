@@ -1,7 +1,9 @@
 
 #Calendar project
 
-#version 8 Calendar project which can be used to enter important dates to the user, change the date, compare the dates with upcoming events to check the upcomign schedule.
+#version 8
+
+Calendar project which can be used to enter important dates to the user, change the date, compare the dates with upcoming events to check the upcomign schedule.
 
 Added Functions:
 
