@@ -7,7 +7,9 @@ Calendar project which can be used to enter important dates to the user, change 
 
 Added Functions:
 
-*Solved some issues giving errors for name of the week function. out by range error and a small math error. *Changed the Sort method to a bubble sort, wanted to try some DSA mehthods *Changed the note to now take as many characters as you would like instead of one word with an exit character of '|'
+*Solved some issues giving errors for name of the week function. out by range error and a small math error.
+*Changed the Sort method to a bubble sort, wanted to try some DSA mehthods
+*Changed the note to now take as many characters as you would like instead of one word with an exit character of '|'
 
 Upcoming work: *Inherited classes which are different calendars - large task to develop so will be done in stages after some more planning
 
